@@ -10,10 +10,14 @@ function CheckHeaders($File) {
     #Write-Host "no of header lines : " $all_lines.Count
     
     # Checking for the pre-defined keys such as "Author","Date", "Jira", "Action", "Description"
-    $keywords_to_check = 'Author', 'Script Name','Date', 'Jira', 'Action' , 'Description' 
-    Write-Host "Heades to check : $keywords_to_check `n"
+    #$keywords_to_check = 'Author', 'Script Name','Date', 'Jira', 'Action' , 'Description'
+    $keywords_from_file = @()
+    Import-Csv -Path "keys.csv" | foreach {
+        $keywords_from_file += $_.Key
+    }
+    Write-Host "Headers to check : $keywords_from_file `n"
     $missing_field_present = $false
-    foreach ($item  in $keywords_to_check) {
+    foreach ($item  in $keywords_from_file) {
         write-host $item
         $missing_key = $true
         foreach ($line in $all_lines) {
