@@ -16,9 +16,25 @@ Describe "Check For Headers" {
     It 'check-PS1_Headers' {
         Import-Csv -Path "file_to_run.csv" | foreach {
             Write-Host "File path to be processed $($_.Filename)"
+
+            # Check if the path exists.
             $file_path = $($_.Filename)
-            Write-Host "The value of file path is $file_path"
-            CheckHeaders($file_path)  | Should -Be $false
+            Write-Host "Processing file from CSV $file_path ...."
+            $path_exists = Test-Path $file_path
+            Write-Host "Test exists hmmmm ....."
+            Write-Host $path_exists
+            if ($path_exists) {
+                Write-Host "Yo ...getting output ...."
+                $int_val = Get-ChildItem -Path $file_path
+                Write-Host $int_val
+                Get-ChildItem -Path $file_path | foreach {
+                    $item = $_
+                    Write-Host "Item is ...."
+                    Write-Host $item
+                    Write-Host "The value of file is $_"
+                    CheckHeaders($item)  | Should -Be $false
+                }
+            }
         }
     }
 }
