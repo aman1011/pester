@@ -4,3 +4,5 @@
 # Jira:LEOP-3851
 # Action: Report Update Restore
 # Description: purpose, scope
+Invoke-Sql
+("SET TRANSACTION ISOLATION LEVEL READ ")
